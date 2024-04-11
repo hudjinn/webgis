@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenLayers Map</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./main.js"> </script>
+  <script src="./libs/v6.15.1-dist/ol.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
+</head>
+<body>
+    <div id="map" class="map"></div>
+    <div id="attribution" class="attribution">
+        <div class="camada-base">
+            <h2 class="control-title">Camada de Fundo</h2>
+            <div id="switcher">
+                <input type="radio" name="baseLayer" value="0" checked> OpenStreetMaps<br>
+                <input type="radio" name="baseLayer" value="1"> Stamen Toner<br>
+                <input type="radio" name="baseLayer" value="2"> Stamen Terrain<br>
+            </div>
+            <div id="texto">
+                <input type="checkbox" name="rotulosCheckbox" checked> <span id="rotulosText">Mostrar Rótulos</span>
+            </div>
+            <div id="layer-list" class="layer-list">Camadas</div>
+        </div>
+        <div id="popup" class="ol-popup">
+            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <div id="popup-content"></div>
+        </div>
+        <div></div>
+    </div>
+    <div id="toolbar"></div>
+    <div id="info-box" class="hidden"></div>
+    <div id="info">&nbsp;</div>
+    <script src="./main.js"></script>
+</body>
+</html>
