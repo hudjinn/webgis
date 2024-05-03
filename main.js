@@ -50,71 +50,76 @@ function init() {
         element: customZoomControls
     }));
 
-    const AdutoraCamada = new ol.layer.Tile({
+    const PrecipitacaoCamada = new ol.layer.Tile({
         source: new ol.source.TileWMS({
-            url: '192.168.10.74/geoserver/malha_dagua/wms',//
+            url: 'http://192.168.10.74/geoserver/testagem_dashboards/wms',//
             params: {
-                'LAYERS': 'malha_dagua:adutoras_ramais_ce',
-                'TILED': true
+                'LAYERS': 'testagem_dashboards:precipitation_test',
+                'TILED': true,
+                'VERSION': '1.1.0', // Especifique a versão se necessário
+                'FORMAT': 'image/png', // Defina o formato da imagem (exemplo: image/png)
+                'SRS': 'EPSG:4674' // Sistema de referência espacial
             },
             serverType: 'geoserver'
         }),
-        title: 'Adutoras e Ramais'
+        title: 'Precipitação'
     });
 
-    const EdificacaoCamada = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-            url: '192.168.10.74/geoserver/malha_dagua/wms',//
-            params: {
-                'LAYERS': 'malha_dagua:edificacao_ceara',
-                'TILED': true
-            },
-            serverType: 'geoserver'
-        }),
-        title: 'Edificações'
-    });    // Camada WMS
+    // const EdificacaoCamada = new ol.layer.Tile({
+    //     source: new ol.source.TileWMS({
+    //         url: '192.168.10.74/geoserver/malha_dagua/wms',//
+    //         params: {
+    //             'LAYERS': 'malha_dagua:edificacao_ceara',
+    //             'TILED': true
+    //         },
+    //         serverType: 'geoserver'
+    //     }),
+    //     title: 'Edificações'
+    // });    // Camada WMS
 
-    const LimitesMunicipaisCamada = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-            url: '192.168.10.74/geoserver/malha_dagua/wms',//
-            params: {
-                'LAYERS': 'malha_dagua:limite_municipal_ce_ibge_sirgas_2000_utm_24s',
-                'TILED': true
-            },
-            serverType: 'geoserver'
-        }),
-        title: 'Limites Municipais'
-    });
-    const PontoCaptacaoCamada = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-            url: '192.168.10.74/geoserver/malha_dagua/wms',//
-            params: {
-                'LAYERS': 'malha_dagua:ponto_captacao_ceara',
-                'TILED': true
-            },
-            serverType: 'geoserver'
-        }),
-        title: 'Pontos de Captação'
-    });
-    const PontosAbastecimentoCamada = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-            url: '192.168.10.74/geoserver/malha_dagua/wms',//
-            params: {
-                'LAYERS': 'malha_dagua:ponto_abastecimento_ceara',
-                'TILED': true
-            },
-            serverType: 'geoserver'
-        }),
-        title: 'Pontos de Abastecimento'
-    });
+    // const LimitesMunicipaisCamada = new ol.layer.Tile({
+    //     source: new ol.source.TileWMS({
+    //         url: '192.168.10.74/geoserver/malha_dagua/wms',//
+    //         params: {
+    //             'LAYERS': 'malha_dagua:limite_municipal_ce_ibge_sirgas_2000_utm_24s',
+    //             'TILED': true
+    //         },
+    //         serverType: 'geoserver'
+    //     }),
+    //     title: 'Limites Municipais'
+    // });
+    // const PontoCaptacaoCamada = new ol.layer.Tile({
+    //     source: new ol.source.TileWMS({
+    //         url: '192.168.10.74/geoserver/malha_dagua/wms',//
+    //         params: {
+    //             'LAYERS': 'malha_dagua:ponto_captacao_ceara',
+    //             'TILED': true
+    //         },
+    //         serverType: 'geoserver'
+    //     }),
+    //     title: 'Pontos de Captação'
+    // });
+    // const PontosAbastecimentoCamada = new ol.layer.Tile({
+    //     source: new ol.source.TileWMS({
+    //         url: '192.168.10.74/geoserver/malha_dagua/wms',//
+    //         params: {
+    //             'LAYERS': 'malha_dagua:ponto_abastecimento_ceara',
+    //             'TILED': true
+    //         },
+    //         serverType: 'geoserver'
+    //     }),
+    //     title: 'Pontos de Abastecimento'
+    // });
  
     // Defina a visibilidade das camadas que deseja desabilitar
-    EdificacaoCamada.setVisible(false);
-    PontosAbastecimentoCamada.setVisible(false);
-    PontoCaptacaoCamada.setVisible(false);
+    PrecipitacaoCamada.setVisible(true);
+    // PontosAbastecimentoCamada.setVisible(false);
+    // PontoCaptacaoCamada.setVisible(false);
 
     const wmsLayerGroup = new ol.layer.Group({
-        layers: [LimitesMunicipaisCamada, EdificacaoCamada, AdutoraCamada,  PontoCaptacaoCamada, PontosAbastecimentoCamada ],
+        layers: [PrecipitacaoCamada],
+
+        // layers: [LimitesMunicipaisCamada, EdificacaoCamada, AdutoraCamada,  PontoCaptacaoCamada, PontosAbastecimentoCamada ],
         title: 'Camadas WMS'
     });
     // Layers de Fundo - Tiles
@@ -219,49 +224,6 @@ function init() {
         });
 
     }
-    map.on('singleclick', function (evt) {
-        document.getElementById('info').innerHTML = '';
-        const viewResolution = /** @type {number} */ (map.getView().getResolution());
-        const urlPromises = [];
-    
-        wmsLayerGroup.getLayers().forEach(function (layer) {
-            if (layer.getVisible()) {
-                const source = layer.getSource();
-                if (source instanceof ol.source.TileWMS) {
-                    const url = source.getFeatureInfoUrl(
-                        evt.coordinate,
-                        viewResolution,
-                        'EPSG:3857',
-                        {'INFO_FORMAT': 'text/html'}
-                    );
-                    if (url) {
-                        urlPromises.push(
-                            fetch(url)
-                                .then((response) => response.text())
-                        );
-                    }
-                }
-            }
-        });
-    
-        Promise.all(urlPromises)
-            .then((responses) => {
-                const html = responses.join('<hr>');
-                document.getElementById('info').innerHTML = html;
-            })
-            .catch((error) => {
-                console.error('Erro ao obter informações de atributos:', error);
-            });
-    });
-    
-    map.on('pointermove', function (evt) {
-        if (evt.dragging) {
-            return;
-        }
-        const hit = map.hasFeatureAtPixel(evt.pixel);
-        map.getTargetElement().style.cursor = hit ? 'pointer' : '';
-    });
-    
 
     // Event listener para o checkbox de rótulos
     checkboxTextLabels.addEventListener('change', function () {
