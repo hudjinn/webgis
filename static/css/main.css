@@ -1,0 +1,199 @@
+.map {
+    height: 100vh;
+    width: 100%;
+}
+
+.ol-scale-line {
+    background: black;
+    padding: 5px;
+}
+
+/* Estilos para o controle personalizado */
+.camada-base {
+    text-align: justify;
+    position: absolute; 
+    bottom: 30px; /* Distância do topo */
+    right: 20px; /* Distância da esquerda */
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    width: 200px;
+    height: auto;
+}
+
+.control-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: black; /* Adicione essa linha para definir a cor do texto */
+}
+
+.custom-control input {
+    margin: 5px 0;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
+}
+
+.custom-zoom-controls {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+}
+
+.custom-zoom-controls button {
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+/* Estilo para o contêiner do slider */
+.slider-container-fluid {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 60%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    box-sizing: border-box;
+    color: white;
+}
+
+/* Estilo para o slider */
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    margin-top: 10px;
+    z-index: 1;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+/* Estilo para o texto */
+.slider-container-fluid p {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Estilo para o thumb do slider */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+#layers-panel {
+    position: absolute;
+    top: 10px; /* ou a posição desejada */
+    right: 10px; /* ou a posição desejada */
+    z-index: 1000; /* ou qualquer valor alto o suficiente */
+}
+
+.layer-button {
+	width: 35px;
+	height: 35px;
+    display: block;
+	left: translateX(50%);
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 50%; /* Círculo */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transições suaves */
+}
+
+/* Botão ativo */
+.layer-button.active {
+    background-color: #c3f8c5;
+    transform: scale(1.2); /* Aumentar o tamanho */
+}
+
+/* Estilo para o ícone dentro do botão */
+.layer-button i {
+    margin: 0 auto; /* Centralizar horizontalmente */
+    display: block; /* Garante que o ícone seja exibido como um bloco */
+}
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: none; /* Inicialmente oculto */
+}
+
+#loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+	/* Estilo para a caixa de texto */
+	.layer-button:hover .tooltip {
+		visibility: visible;
+		opacity: 1;
+	}
+
+	.tooltip {
+		visibility: hidden;
+		opacity: 0;
+		transition: visibility 0s, opacity 0.5s linear;
+		position: absolute;
+		background-color: black;
+		color: white;
+		padding: 5px;
+		border-radius: 5px;
+		bottom: 50px;
+		left: -20px;
+	}
